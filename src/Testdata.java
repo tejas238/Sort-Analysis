@@ -1,17 +1,19 @@
-import java.math.BigInteger;
+import java.util.Random;
 import java.util.Vector;
 
 public class Testdata {
-    private Vector<Vector<Vector<BigInteger[]>>>  alldata;
+    private Vector<Vector<Vector<int[]>>>  alldata;
+    static Random rand;
 
     public Testdata() {
-        alldata = new Vector<Vector<Vector<BigInteger[]>>>(12);
+        alldata = new Vector<Vector<Vector<int[]>>>(12);
+        rand = new Random(System.nanoTime());
         for (int i = 0;i<12;++i) {
-            alldata.add(new Vector<Vector<BigInteger[]>>());
+            alldata.add(new Vector<Vector<int[]>>());
         }
     }
 
-    public BigInteger[] request(int base2size, int indexforsize, String type) {
+    public int[] request(int base2size, int indexforsize, String type) {
 
         if (base2size < 0 || indexforsize < 0) throw new RuntimeException();
 
@@ -30,19 +32,19 @@ public class Testdata {
         else if (type.equals("randuniq")) lookup = 11;
         else throw new RuntimeException();
 
-        Vector<Vector<BigInteger[]>> typeref = alldata.elementAt(lookup);
+        Vector<Vector<int[]>> typeref = alldata.elementAt(lookup);
 
         boolean correctsize = false;
 
         while (correctsize == false) {
             try {
-                Vector<BigInteger[]> sizeref = typeref.elementAt(base2size);
+                Vector<int[]> sizeref = typeref.elementAt(base2size);
                 correctsize = true;
 
                 boolean correctindex = false;
                 while (correctindex == false) {
                     try {
-                        BigInteger[] requested = sizeref.elementAt(indexforsize);
+                        int[] requested = sizeref.elementAt(indexforsize);
                         correctindex = true;
 
                         return requested;
@@ -52,30 +54,66 @@ public class Testdata {
                     }
                 }
             } catch (Exception e){
-                typeref.add(new Vector<BigInteger[]>());
+                typeref.add(new Vector<int[]>());
             }
         }
         return null;
     }
 
-    private BigInteger [] create(int type,int base2size) {
+    private int [] create(int type,int base2size) {
         if (type == 0) return totalrand(base2size);
-        /*else if (type == 1) return totaldup(base2size);
-        else if (type == 2) return almostsortdup(0,base2size);
-        else if (type == 3) return sortdup(0, base2size);
-        else if (type == 4) return sortdup(1, base2size);
-        else if (type == 5) return almostsortdup(1,base2size);
+        else if (type == 1) return totaldup(base2size);
+        else if (type == 2) return almostsortdup(false,base2size);
+        else if (type == 3) return sortdup(false, base2size);
+        else if (type == 4) return sortdup(true, base2size);
+        else if (type == 5) return almostsortdup(true,base2size);
         else if (type == 6) return randup(base2size);
-        else if (type == 7) return almostsortuniq(0,base2size);
-        else if (type == 8) return sortuniq(0,base2size);
-        else if (type == 9) return sortuniq(1,base2size);
-        else if (type == 10) return almostsortuniq(1,base2size);
-        else if (type == 11) return randuniq(base2size); */
+        else if (type == 7) return almostsortuniq(false,base2size);
+        else if (type == 8) return sortuniq(false,base2size);
+        else if (type == 9) return sortuniq(true,base2size);
+        else if (type == 10) return almostsortuniq(true,base2size);
+        else if (type == 11) return randuniq(base2size);
         else throw new RuntimeException();
     }
 
-    private BigInteger [] totalrand(int base2size) {
-        BigInteger check [] = {new BigInteger("1"),new BigInteger("2")};
-        return check;
+    private int [] totalrand(int base2size) {
+        int size = (int)Math.pow(2,base2size);
+        int [] arr = new int[size];
+
+        for(int i = 0;i<size;++i) {
+            arr[i] = rand.nextInt();
+        }
+
+        return arr;
     }
+
+    private int [] totaldup(int base2size) {
+        int size = (int)Math.pow(2,base2size);
+        int [] arr = new int[size];
+
+        int randnum = rand.nextInt();
+        for(int i = 0;i<size;++i) {
+            arr[i] = randnum;
+        }
+
+        return arr;
+    }
+
+    private int [] almostsortdup(boolean reverse,int base2size) {
+        int size = (int)Math.pow(2,base2size);
+        int [] arr = sortdup(false,base2size);
+
+        for (int i=0;i<size;++i) {
+            int random = rand.nextInt(100) + 1;
+            int random2 = rand.nextInt(size);
+            if (random < 15) {
+                int to_swap = arr[random2];
+                arr[random2] = arr[i];
+                arr[i] = to_swap;
+            }
+        }
+        return arr;
+    }
+
+    private int [] sortdup()
 }
