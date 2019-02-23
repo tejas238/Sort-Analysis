@@ -6,11 +6,14 @@ public class Testdata {
 
     public Testdata() {
         alldata = new Vector<Vector<Vector<BigInteger[]>>>(12);
+        for (int i = 0;i<12;++i) {
+            alldata.add(new Vector<Vector<BigInteger[]>>());
+        }
     }
 
     public BigInteger[] request(int base2size, int indexforsize, String type) {
 
-        if (base2size < 0 || indexforsize < 0) throw new RuntimeException;
+        if (base2size < 0 || indexforsize < 0) throw new RuntimeException();
 
         int lookup;
         if (type.equals("totalrand")) lookup = 0;
@@ -25,7 +28,7 @@ public class Testdata {
         else if (type.equals("revsortuniq")) lookup = 9;
         else if (type.equals("almostrevsortuniq")) lookup = 10;
         else if (type.equals("randuniq")) lookup = 11;
-        else throw new RuntimeException;
+        else throw new RuntimeException();
 
         Vector<Vector<BigInteger[]>> typeref = alldata.elementAt(lookup);
 
@@ -43,19 +46,21 @@ public class Testdata {
                         correctindex = true;
 
                         return requested;
-                    } finally {
+                    } catch(Exception e) {
+                        System.out.println("create");
                         sizeref.add(create(lookup,base2size));
                     }
                 }
-            } finally {
+            } catch (Exception e){
                 typeref.add(new Vector<BigInteger[]>());
             }
         }
+        return null;
     }
 
     private BigInteger [] create(int type,int base2size) {
         if (type == 0) return totalrand(base2size);
-        else if (type == 1) return totaldup(base2size);
+        /*else if (type == 1) return totaldup(base2size);
         else if (type == 2) return almostsortdup(0,base2size);
         else if (type == 3) return sortdup(0, base2size);
         else if (type == 4) return sortdup(1, base2size);
@@ -65,16 +70,12 @@ public class Testdata {
         else if (type == 8) return sortuniq(0,base2size);
         else if (type == 9) return sortuniq(1,base2size);
         else if (type == 10) return almostsortuniq(1,base2size);
-        else if (type == 11) return randuniq(base2size);
+        else if (type == 11) return randuniq(base2size); */
+        else throw new RuntimeException();
     }
 
     private BigInteger [] totalrand(int base2size) {
-
-        
+        BigInteger check [] = {new BigInteger("1"),new BigInteger("2")};
+        return check;
     }
-
-
-
-
-
 }
