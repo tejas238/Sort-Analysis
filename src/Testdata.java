@@ -98,7 +98,7 @@ public class Testdata {
         return arr;
     }
 
-    public int [] rev(int [] arr) {
+    private int [] rev(int [] arr) {
         for (int i = 0, j = arr.length-1;i<j;++i,--j) {
           int swap = arr[i];
           arr[i] = arr[j];
