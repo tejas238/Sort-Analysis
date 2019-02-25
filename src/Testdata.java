@@ -13,9 +13,9 @@ public class Testdata {
         }
     }
 
-    public int[] request(int base2size, int indexforsize, String type) {
+    public int[] request(int base1size, int indexforsize, String type) {
 
-        if (base2size < 0 || indexforsize < 0) throw new RuntimeException();
+        if (base1size < 0 || indexforsize < 0) throw new RuntimeException();
 
         int lookup;
         if (type.equals("totalrand")) lookup = 0;
@@ -38,7 +38,7 @@ public class Testdata {
 
         while (correctsize == false) {
             try {
-                Vector<int[]> sizeref = typeref.elementAt(base2size);
+                Vector<int[]> sizeref = typeref.elementAt(base1size);
                 correctsize = true;
 
                 boolean correctindex = false;
@@ -49,8 +49,7 @@ public class Testdata {
 
                         return requested;
                     } catch(Exception e) {
-                        System.out.println("create");
-                        sizeref.add(create(lookup,base2size));
+                        sizeref.add(create(lookup,base1size));
                     }
                 }
             } catch (Exception e){
@@ -60,24 +59,24 @@ public class Testdata {
         return null;
     }
 
-    private int [] create(int type,int base2size) {
-        if (type == 0) return totalrand(base2size);
-        else if (type == 1) return totaldup(base2size);
-        else if (type == 2) return almostsortdup(false,base2size);
-        else if (type == 3) return sortdup(false, base2size);
-        else if (type == 4) return sortdup(true, base2size);
-        else if (type == 5) return almostsortdup(true,base2size);
-        else if (type == 6) return randup(base2size);
-        else if (type == 7) return almostsortuniq(false,base2size);
-        else if (type == 8) return sortuniq(false,base2size);
-        else if (type == 9) return sortuniq(true,base2size);
-        else if (type == 10) return almostsortuniq(true,base2size);
-        else if (type == 11) return randuniq(base2size);
+    private int [] create(int type,int base1size) {
+        if (type == 0) return totalrand(base1size);
+        else if (type == 1) return totaldup(base1size);
+        else if (type == 2) return almostsortdup(false,base1size);
+        else if (type == 3) return sortdup(false, base1size);
+        else if (type == 4) return sortdup(true, base1size);
+        else if (type == 5) return almostsortdup(true,base1size);
+        else if (type == 6) return randup(base1size);
+        else if (type == 7) return almostsortuniq(false,base1size);
+        else if (type == 8) return sortuniq(false,base1size);
+        else if (type == 9) return sortuniq(true,base1size);
+        else if (type == 10) return almostsortuniq(true,base1size);
+        else if (type == 11) return randuniq(base1size);
         else throw new RuntimeException();
     }
 
-    private int [] totalrand(int base2size) {
-        int size = (int)Math.pow(2,base2size);
+    private int [] totalrand(int base1size) {
+        int size = (int)Math.pow(1.1,base1size);
         int [] arr = new int[size];
 
         for(int i = 0;i<size;++i) {
@@ -87,8 +86,8 @@ public class Testdata {
         return arr;
     }
 
-    private int [] totaldup(int base2size) {
-        int size = (int)Math.pow(2,base2size);
+    private int [] totaldup(int base1size) {
+        int size = (int)Math.pow(1.1,base1size);
         int [] arr = new int[size];
 
         int randnum = rand.nextInt();
@@ -99,13 +98,21 @@ public class Testdata {
         return arr;
     }
 
-    private int [] almostsortdup(boolean reverse,int base2size) {
-        int size = (int)Math.pow(2,base2size);
-        int [] arr = sortdup(false,base2size);
+    public int [] rev(int [] arr) {
+        for (int i = 0, j = arr.length-1;i<j;++i,--j) {
+          int swap = arr[i];
+          arr[i] = arr[j];
+          arr[j] = swap;
+        }
+        return arr;
+    }
 
-        for (int i=0;i<size;++i) {
+    private int [] almostsortdup(boolean reverse,int base1size) {
+        int [] arr = sortdup(reverse,base1size);
+
+        for (int i=0;i<arr.length;++i) {
             int random = rand.nextInt(100) + 1;
-            int random2 = rand.nextInt(size);
+            int random2 = rand.nextInt(arr.length);
             if (random < 15) {
                 int to_swap = arr[random2];
                 arr[random2] = arr[i];
@@ -115,5 +122,70 @@ public class Testdata {
         return arr;
     }
 
-    private int [] sortdup()
+    private int [] sortuniq(boolean reverse, int base1size) {
+        int size = (int)Math.pow(1.1,base1size);
+        int [] arr = new int [size];
+
+
+        long choosefrom = (long)Math.pow(2,32) - (size - 1);
+        long last_added = 0;
+
+        for(int i = 0; i<size; ++i) {
+            last_added += Math.floorMod(rand.nextLong(), (choosefrom - last_added)) + 1;
+            ++choosefrom;
+            int to_int = (int)(last_added - (Math.pow(2,32)-Math.pow(2,31) + 1));
+            arr[i] = to_int;
+        }
+
+        if (reverse == true) rev(arr);
+        return arr;
+    }
+
+    private int [] randuniq(int base1size) {
+       int [] arr = sortuniq(false,base1size);
+
+       for(int i = 0;i<arr.length;++i) {
+           int swapindex = rand.nextInt(arr.length);
+           int swap = arr[swapindex];
+           arr[swapindex] = arr[i];
+           arr[i] = swap;
+       }
+       return arr;
+    }
+
+    private int [] almostsortuniq(boolean reverse,int base1size) {
+        int [] arr = sortuniq(reverse,base1size);
+
+        for (int i=0;i<arr.length;++i) {
+            int random = rand.nextInt(100) + 1;
+            int random2 = rand.nextInt(arr.length);
+            if (random < 15) {
+                int to_swap = arr[random2];
+                arr[random2] = arr[i];
+                arr[i] = to_swap;
+            }
+        }
+        return arr;
+    }
+
+    private int [] randup(int base1size) {
+        int [] arr = sortdup(false,base1size);
+
+       for(int i = 0;i<arr.length;++i) {
+           int swapindex = rand.nextInt(arr.length);
+           int swap = arr[swapindex];
+           arr[swapindex] = arr[i];
+           arr[i] = swap;
+       }
+       return arr;
+    }
+
+    private int [] sortdup(boolean reverse,int base1size) {
+        int[] arr = sortuniq(reverse, base1size);
+
+        for (int i = 0; i < (arr.length - 1); ++i)
+            if (Math.floorMod(rand.nextInt(), 3) == 1) arr[i + 1] = arr[i];
+
+        return arr;
+    }
 }
