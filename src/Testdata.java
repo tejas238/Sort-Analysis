@@ -5,7 +5,7 @@ public class Testdata {
     private Vector<Vector<Vector<int[]>>>  alldata;
     static Random rand;
 
-    public Testdata() {
+    public Testdata() throws java.lang.RuntimeException, java.lang.OutOfMemoryError{
         alldata = new Vector<Vector<Vector<int[]>>>(12);
         rand = new Random(System.nanoTime());
         for (int i = 0;i<12;++i) {
@@ -13,7 +13,8 @@ public class Testdata {
         }
     }
 
-    public int[] request(int base1size, int indexforsize, String type) {
+    public int[] request(int base1size, int indexforsize, String type) throws java.lang.RuntimeException,
+            java.lang.OutOfMemoryError {
 
         if (base1size < 0 || indexforsize < 0) throw new RuntimeException();
 
@@ -48,18 +49,18 @@ public class Testdata {
                         correctindex = true;
 
                         return requested;
-                    } catch(Exception e) {
+                    } catch(ArrayIndexOutOfBoundsException e) {
                         sizeref.add(create(lookup,base1size));
                     }
                 }
-            } catch (Exception e){
+            } catch (ArrayIndexOutOfBoundsException e){
                 typeref.add(new Vector<int[]>());
             }
         }
         return null;
     }
 
-    private int [] create(int type,int base1size) {
+    private int [] create(int type,int base1size) throws java.lang.OutOfMemoryError,RuntimeException {
         if (type == 0) return totalrand(base1size);
         else if (type == 1) return totaldup(base1size);
         else if (type == 2) return almostsortdup(false,base1size);
@@ -75,8 +76,8 @@ public class Testdata {
         else throw new RuntimeException();
     }
 
-    private int [] totalrand(int base1size) {
-        int size = (int)Math.pow(1.1,base1size);
+    private int [] totalrand(int base1size) throws java.lang.OutOfMemoryError{
+        int size = (int)Math.pow(1.5,base1size);
         int [] arr = new int[size];
 
         for(int i = 0;i<size;++i) {
@@ -86,8 +87,8 @@ public class Testdata {
         return arr;
     }
 
-    private int [] totaldup(int base1size) {
-        int size = (int)Math.pow(1.1,base1size);
+    private int [] totaldup(int base1size) throws java.lang.OutOfMemoryError{
+        int size = (int)Math.pow(1.5,base1size);
         int [] arr = new int[size];
 
         int randnum = rand.nextInt();
@@ -98,7 +99,7 @@ public class Testdata {
         return arr;
     }
 
-    private int [] rev(int [] arr) {
+    private int [] rev(int [] arr) throws java.lang.OutOfMemoryError {
         for (int i = 0, j = arr.length-1;i<j;++i,--j) {
           int swap = arr[i];
           arr[i] = arr[j];
@@ -107,7 +108,7 @@ public class Testdata {
         return arr;
     }
 
-    private int [] almostsortdup(boolean reverse,int base1size) {
+    private int [] almostsortdup(boolean reverse,int base1size) throws java.lang.OutOfMemoryError{
         int [] arr = sortdup(reverse,base1size);
 
         for (int i=0;i<arr.length;++i) {
@@ -122,8 +123,8 @@ public class Testdata {
         return arr;
     }
 
-    private int [] sortuniq(boolean reverse, int base1size) {
-        int size = (int)Math.pow(1.1,base1size);
+    private int [] sortuniq(boolean reverse, int base1size) throws java.lang.OutOfMemoryError{
+        int size = (int)Math.pow(1.5,base1size);
         int [] arr = new int [size];
 
 
@@ -141,7 +142,7 @@ public class Testdata {
         return arr;
     }
 
-    private int [] randuniq(int base1size) {
+    private int [] randuniq(int base1size) throws java.lang.OutOfMemoryError{
        int [] arr = sortuniq(false,base1size);
 
        for(int i = 0;i<arr.length;++i) {
@@ -153,7 +154,7 @@ public class Testdata {
        return arr;
     }
 
-    private int [] almostsortuniq(boolean reverse,int base1size) {
+    private int [] almostsortuniq(boolean reverse,int base1size) throws java.lang.OutOfMemoryError{
         int [] arr = sortuniq(reverse,base1size);
 
         for (int i=0;i<arr.length;++i) {
@@ -168,7 +169,8 @@ public class Testdata {
         return arr;
     }
 
-    private int [] randup(int base1size) {
+    private int [] randup(int base1size) throws java.lang.OutOfMemoryError {
+
         int [] arr = sortdup(false,base1size);
 
        for(int i = 0;i<arr.length;++i) {
@@ -180,7 +182,7 @@ public class Testdata {
        return arr;
     }
 
-    private int [] sortdup(boolean reverse,int base1size) {
+    private int [] sortdup(boolean reverse,int base1size) throws java.lang.OutOfMemoryError{
         int[] arr = sortuniq(reverse, base1size);
 
         for (int i = 0; i < (arr.length - 1); ++i)
