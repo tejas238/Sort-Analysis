@@ -1,13 +1,33 @@
+/*Testdata.java class implementation last edited 3/3/19. This class produces data and stores
+  its results for later use. Testrunner only uses one instance of this class at a time so that
+  RAM usage is minimal when allocating very large arrays. Data output generated is of types:
+  totalrand : Totally random integer data => every integer has equal probability for appearing at any index
+  totaldup: Every integer has equal probability for appearing at EVERY index of this array
+  almostsortdup: Array generated with good chance of duplicates in an almost sorted order
+  sortdup: Array generated with good chance of duplicates in sorted order
+  revsortdup: Array generated that is reverse sorted with good chance of duplicates
+  almostrevsortdup: Array generated that is almost reverse sorted with good chance of duplicates
+  randup: Random array generated with good chance of duplicates
+  almostsortuniq: Array generated that is almost sorted with no duplicates
+  sortuniq: Array generated that is sorted with no duplicates
+  revsortuniq: Array generated that is reverse sorted with no duplicates
+  almostrevsortuniq: Array generated that is almost reverse sorted with no duplicates
+  randuniq: Array generated that as completely random with no duplicates
+ */
 import java.util.Random;
 import java.util.Vector;
 
 public class Testdata {
-    private Vector<Vector<Vector<int[]>>>  alldata;
+    private Vector<Vector<Vector<int[]>>>  alldata; //an array of int[] within an array within an array
+                                                    //First level array varies between the different algorithms
+                                                    //Second level array varies between different sizes (actual size is
+                                                    //1.5^(size). Third level array varies between arrays of the same size
+                                                    //Using a vector means that you can construct an extendable array
     static Random rand;
 
     public Testdata() throws java.lang.RuntimeException, java.lang.OutOfMemoryError{
         alldata = new Vector<Vector<Vector<int[]>>>(12);
-        rand = new Random(System.nanoTime());
+        rand = new Random(System.nanoTime()); //every instance of Testdata produces different random values
         for (int i = 0;i<12;++i) {
             alldata.add(new Vector<Vector<int[]>>());
         }
@@ -33,16 +53,19 @@ public class Testdata {
         else if (type.equals("randuniq")) lookup = 11;
         else throw new RuntimeException();
 
-        Vector<Vector<int[]>> typeref = alldata.elementAt(lookup);
+        Vector<Vector<int[]>> typeref = alldata.elementAt(lookup); //lookup an array of different sizes for a particular data type
 
         boolean correctsize = false;
 
+        //Keep adding arrays for every size until an element at typeref.elementAt(base1size) exists
         while (correctsize == false) {
             try {
                 Vector<int[]> sizeref = typeref.elementAt(base1size);
                 correctsize = true;
 
                 boolean correctindex = false;
+
+                //Keep adding int[] of a particular size and data type until you get to an array at sizeref.elementAt(indexforsize)
                 while (correctindex == false) {
                     try {
                         int[] requested = sizeref.elementAt(indexforsize);
@@ -60,6 +83,7 @@ public class Testdata {
         return null;
     }
 
+    //Create an array of type as shown below and for a particular size
     private int [] create(int type,int base1size) throws java.lang.OutOfMemoryError,RuntimeException {
         if (type == 0) return totalrand(base1size);
         else if (type == 1) return totaldup(base1size);
