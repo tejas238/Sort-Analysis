@@ -75,7 +75,7 @@ public class Testrunner {
     public long exec(int [] input, int choice) throws RuntimeException, UnsortedException{
         double alldiff,counter,thisdiff,loopstart,mindiff;
         loopstart = counter = alldiff = thisdiff = 0;
-        mindiff = 5e8;
+        mindiff = 1e9;
         int [] sorted_arr = null;
         double thistart, thisend;
         boolean waszero = false;
@@ -96,9 +96,9 @@ public class Testrunner {
            }
            thisend = System.nanoTime();
            thisdiff = thisend - thistart;
-           System.out.println(thisdiff);
+          // System.out.println(thisdiff);
 
-           if (thisdiff > 5e8) {
+           if (thisdiff > 1e9) {
                System.out.println("LARGE TIME");
                throw new RuntimeException();
            }

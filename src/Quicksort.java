@@ -11,13 +11,13 @@ public class Quicksort {
     */
 
     public static int[] quicksort(int[] list) {
-        System.out.print("[");
+        /*System.out.print("[");
         for(int i = 0; i< list.length;++i) {
             System.out.print(list[i]+",");
         }
-        System.out.print("]\n");
+        System.out.print("]\n"); */
         quicksort(list, 0, list.length - 1);
-	return list;
+	    return list;
     }
 
     private static void quicksort(int[] list, int start, int end) {
@@ -32,7 +32,7 @@ public class Quicksort {
 
     private static int partition(int[] list, int start, int end){
         //randomize the pivot
-        int part = ThreadLocalRandom.current().nextInt(start, end);
+        int part = ThreadLocalRandom.current().nextInt(start, end+1);
         int temp = list[start];
         list[start] = list[part];
         list[part] = temp;
@@ -40,7 +40,7 @@ public class Quicksort {
         int i = start + 1;
         int j = end;
         while(true) {
-            System.out.println("HAHAHAHA");
+            //System.out.println("HAHAHAHA");
 
             for(; list[i] < list[start]; i++) {
                 if (i == end)
@@ -56,6 +56,8 @@ public class Quicksort {
             temp = list[i];
             list[i] = list[j];
             list[j] = temp;
+            ++i;
+            --j;
         }
         if(j != start) {
             temp = list[j];
