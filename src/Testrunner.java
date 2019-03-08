@@ -91,7 +91,7 @@ public class Testrunner {
                    sorted_arr = placeholder(input); //heapsort
                    break;
                case 2:
-                   sorted_arr = placeholder(input); //quicksort
+                   sorted_arr = Quicksort.quicksort(input); //quicksort
                    break;
            }
            thisend = System.nanoTime();

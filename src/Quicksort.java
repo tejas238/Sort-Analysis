@@ -1,18 +1,18 @@
-package com.company;
-
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Main {
-
+public class Quicksort {
+/*
     public static void main(String[] args) {
 	    int list[] = {9,1,6,5787687,8,3,2,8,56,23423,675,343};
 	    quicksort(list);
         System.out.println(Arrays.toString(list));
     }
+    */
 
-    public static void quicksort(int[] list) {
+    public static int[] quicksort(int[] list) {
         quicksort(list, 0, list.length - 1);
+	return list;
     }
 
     private static void quicksort(int[] list, int start, int end) {
