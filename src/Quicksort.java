@@ -11,6 +11,11 @@ public class Quicksort {
     */
 
     public static int[] quicksort(int[] list) {
+        System.out.print("[");
+        for(int i = 0; i< list.length;++i) {
+            System.out.print(list[i]+",");
+        }
+        System.out.print("]\n");
         quicksort(list, 0, list.length - 1);
 	return list;
     }
@@ -35,6 +40,8 @@ public class Quicksort {
         int i = start + 1;
         int j = end;
         while(true) {
+            System.out.println("HAHAHAHA");
+
             for(; list[i] < list[start]; i++) {
                 if (i == end)
                     break;

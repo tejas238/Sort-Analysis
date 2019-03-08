@@ -85,17 +85,18 @@ public class Testrunner {
            thistart = System.nanoTime();
            switch (choice) {
                case 0:
-                   sorted_arr = placeholder(input); //mergesort
+                   sorted_arr = Quicksort.quicksort(input);//mergesort
                    break;
                case 1:
                    sorted_arr = placeholder(input); //heapsort
                    break;
                case 2:
-                   sorted_arr = Quicksort.quicksort(input); //quicksort
+                   sorted_arr = placeholder(input) ; //quicksort
                    break;
            }
            thisend = System.nanoTime();
            thisdiff = thisend - thistart;
+           System.out.println(thisdiff);
 
            if (thisdiff > 5e8) {
                System.out.println("LARGE TIME");
