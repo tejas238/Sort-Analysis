@@ -85,10 +85,10 @@ public class Testrunner {
            thistart = System.nanoTime();
            switch (choice) {
                case 0:
-                   sorted_arr = Heapsort.heapsort(input);//mergesort
+                   sorted_arr = Mergesort.mergesort(input);//mergesort
                    break;
                case 1:
-                   sorted_arr = placeholder(input); //heapsort
+                   sorted_arr = Heapsort.heapsort(input); //heapsort
                    break;
                case 2:
                    sorted_arr = Quicksort.quicksort(input) ; //quicksort
@@ -123,7 +123,7 @@ public class Testrunner {
     }
 
     //placeholder function to be replaced b sorting functions
-    public int[] placeholder(int [] input) {
+    /*public int[] placeholder(int [] input) {
 
         int val = (int)(Math.log(input.length)/Math.log(1.5));
 
@@ -132,7 +132,7 @@ public class Testrunner {
         }
 
         return input;
-    }
+    }*/
 
     //checks if output is in sorted order
     public boolean confirm(int [] to_check) {
