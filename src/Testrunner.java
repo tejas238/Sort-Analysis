@@ -36,7 +36,7 @@ public class Testrunner {
                                 long getdata = System.nanoTime(); //benchmark time taken to allocate array
                                 int[] arr = data.request(size, 0, input[i]); //array of 'size' in returned as per input[i]
                                 long gotdata = System.nanoTime();
-                                if (gotdata - getdata > 5e9) throw new RuntimeException(); //5 seconds max to get array
+                                if (gotdata - getdata > 10e9) throw new RuntimeException(); //5 seconds max to get array
                                 sum += exec(arr,k); //exec returns time taken to sort array
                                 System.out.print(algo[k] + "_" + input[i] + "_" + size + "_" + j + " Done! ");
                             }
@@ -75,7 +75,7 @@ public class Testrunner {
     public long exec(int [] input, int choice) throws RuntimeException, UnsortedException{
         double alldiff,counter,thisdiff,loopstart,mindiff;
         loopstart = counter = alldiff = thisdiff = 0;
-        mindiff = 1e9;
+        mindiff = 10e9;
         int [] sorted_arr = null;
         double thistart, thisend;
         boolean waszero = false;
@@ -98,7 +98,7 @@ public class Testrunner {
            thisdiff = thisend - thistart;
           // System.out.println(thisdiff);
 
-           if (thisdiff > 1e9) {
+           if (thisdiff > 10e9) {
                System.out.println("LARGE TIME");
                throw new RuntimeException();
            }
