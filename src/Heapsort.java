@@ -4,7 +4,7 @@ public class Heapsort {
         if (input == null) return null;
 
         int size = input.length;
-       for(int i = size-1;i>=0;--i)  {
+       for(int i = (size/2)-1;i>=0;--i)  {
           heapify(input,i,size-1);
        }
        while(size>1) {

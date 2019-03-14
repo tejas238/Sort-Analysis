@@ -19,7 +19,7 @@ public class Testrunner {
                     "almostrevsortdup", "randup", "almostsortuniq", "sortuniq", "revsortuniq", "almostrevsortuniq", "randuniq"};
             String[]algo = {"MergeSort","HeapSort","QuickSort"};
 
-            for (int k = 0; k < 3; ++k) { //For each of the three algorithms
+            for (int k = 1; k < 2; ++k) { //For each of the three algorithms
 
                 for (int i = 0; i < input.length; ++i) { //For all input data types
 
